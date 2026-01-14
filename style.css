@@ -25,6 +25,10 @@ header {
     border: 2px solid #ccc;
     overflow: hidden;
 }
+.evm.voted {
+    opacity: 0.35;
+    pointer-events: none;
+}
 
 .evm-header {
     font-weight: bold;
@@ -128,3 +132,4 @@ header {
     border-radius: 8px;
     cursor: pointer;
 }
+
