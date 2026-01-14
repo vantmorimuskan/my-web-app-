@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const sound = document.getElementById("voteSound");
 
     let voted = new Set();
+    let votingStarted = false;
+    let completionBeepPlayed = false;
 
     rows.forEach(row => {
         row.addEventListener("click", () => {
@@ -17,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
             sound.currentTime = 0;
             sound.play();
 
+            votingStarted = true;
             voted.add(card);
             card.classList.add("voted");
 
@@ -25,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (msg) msg.remove();
             });
 
-            if (voted.size < cards.length) {
+            if (voted.size < cards.length && votingStarted) {
                 cards.forEach(c => {
                     if (!voted.has(c)) {
                         const msg = document.createElement("div");
@@ -34,7 +37,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         c.appendChild(msg);
                     }
                 });
-            } else {
+            }
+
+            if (voted.size === cards.length) {
                 cards.forEach(c => {
                     const msg = document.createElement("div");
                     msg.className = "status-message status-done";
@@ -42,10 +47,18 @@ document.addEventListener("DOMContentLoaded", () => {
                     c.appendChild(msg);
                 });
 
+                if (!completionBeepPlayed) {
+                    completionBeepPlayed = true;
+                    setTimeout(() => {
+                        sound.currentTime = 0;
+                        sound.play();
+                    }, 200);
+                }
+
                 setTimeout(() => {
                     container.style.display = "none";
                     summary.style.display = "flex";
-                }, 800);
+                }, 3000);
             }
         });
     });
