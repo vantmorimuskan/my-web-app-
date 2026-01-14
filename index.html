@@ -2,122 +2,173 @@
 <html lang="mr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EVM Simulation - 4 Unit Voting</title>
-    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        .beep-glow { box-shadow: 0 0 20px #ff0000; background-color: #ff4d4d !important; transition: all 0.3s; }
+        .symbol-box { width: 50px; height: 50px; object-fit: contain; background: white; border: 1px solid #ddd; padding: 2px; }
+        .voted-overlay { position: absolute; inset: 0; background: rgba(255,255,255,0.85); display: flex; align-items: center; justify-content: center; z-index: 10; font-weight: bold; text-align: center; padding: 10px; }
+    </style>
 </head>
-<body>
+<body class="bg-gray-200 min-h-screen" x-data="votingApp()">
 
-<header>
-    <h1>मतदान केंद्रावर कमीत कमी दोन व जास्तीत जास्त चार EVM</h1>
-    <p>कृपया चारही युनिट्सवर मतदान पूर्ण करा</p>
-</header>
+    <header class="bg-zinc-800 text-white p-4 text-center border-b-4 border-orange-500 shadow-lg">
+        <h1 class="text-xl font-bold">मतदान केंद्रावर कमीत कमी दोन व जास्तीत जास्त चार EVM</h1>
+        <p class="text-sm text-blue-400 mt-1">कृपया चारही युनिट्सवर मतदान पूर्ण करा</p>
+    </header>
 
-<div class="container">
+    <main class="container mx-auto py-8 px-4">
 
-    <!-- EVM CARD TEMPLATE (4 cards) -->
+        <template x-if="screen === 'ballot'">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 max-w-7xl mx-auto">
+                
+                <div class="bg-white border-2 border-slate-300 rounded shadow-md relative overflow-hidden">
+                    <div class="bg-slate-100 p-1 text-[10px] font-bold text-center border-b uppercase">१ - 'अ' जागा (पांढरा)</div>
+                    <div class="h-14 border-b bg-gray-50/50 flex items-center px-2 text-xs font-bold text-gray-400">१</div>
+                    <div class="flex items-center h-20 p-2 border-b cursor-pointer hover:bg-slate-50" @click="castVote('white', 'बुचडे सुभाष राजाराम')">
+                        <div class="w-6 font-bold text-xs">२</div>
+                        <div class="flex-1 text-xs font-bold px-2">बुचडे सुभाष राजाराम</div>
+                        <img src="image_7f134b.png" class="symbol-box mx-1" alt="Symbol">
+                        <div class="w-16 flex flex-col items-center justify-center border-l gap-1 h-full bg-slate-50">
+                            <div class="w-3 h-3 rounded-full border bg-red-950" :class="activeUnit === 'white' ? 'beep-glow' : ''"></div>
+                            <div class="w-10 h-10 rounded-full border-2 border-blue-900 bg-blue-500 shadow-md active:scale-95 transition"></div>
+                        </div>
+                    </div>
+                    <template x-for="i in 7"><div class="h-10 border-b bg-gray-50/50"></div></template>
+                    <div x-show="hasVoted('white')" class="voted-overlay">
+                        <span class="text-sm" :class="votedList.length < 4 ? 'text-blue-700' : 'text-green-700'" 
+                              x-text="votedList.length < 4 ? 'पुढील उमेदवारास मतदान करा' : 'मतदान पूर्ण ✓'"></span>
+                    </div>
+                </div>
 
-    <!-- EVM 1 -->
-    <div class="evm evm-1">
-        <div class="evm-header">१ - अ' जागा (पांढरा)</div>
-        <div class="candidate"></div><div class="candidate"></div><div class="candidate"></div>
+                <div class="bg-pink-50 border-2 border-pink-200 rounded shadow-md relative overflow-hidden">
+                    <div class="bg-pink-100 p-1 text-[10px] font-bold text-center border-b uppercase">२ - 'ब' जागा (गुलाबी)</div>
+                    <div class="h-14 border-b bg-pink-100/10 flex items-center px-2 text-xs font-bold text-pink-300">१</div>
+                    <div class="flex items-center h-20 p-2 border-b cursor-pointer hover:bg-white" @click="castVote('pink', 'नरुटे पुष्पा निलेश')">
+                        <div class="w-6 font-bold text-xs">२</div>
+                        <div class="flex-1 text-xs font-bold px-2">नरुटे पुष्पा निलेश</div>
+                        <img src="image_7f134b.png" class="symbol-box mx-1" alt="Symbol">
+                        <div class="w-16 flex flex-col items-center justify-center border-l gap-1 h-full bg-slate-50">
+                            <div class="w-3 h-3 rounded-full border bg-red-950" :class="activeUnit === 'pink' ? 'beep-glow' : ''"></div>
+                            <div class="w-10 h-10 rounded-full border-2 border-blue-900 bg-blue-500 shadow-md active:scale-95 transition"></div>
+                        </div>
+                    </div>
+                    <template x-for="i in 7"><div class="h-10 border-b bg-pink-100/20"></div></template>
+                    <div x-show="hasVoted('pink')" class="voted-overlay">
+                        <span class="text-sm" :class="votedList.length < 4 ? 'text-blue-700' : 'text-green-700'" 
+                              x-text="votedList.length < 4 ? 'पुढील उमेदवारास मतदान करा' : 'मतदान पूर्ण ✓'"></span>
+                    </div>
+                </div>
 
-        <div class="candidate selectable">
-            <span class="number">४</span>
-            <span class="candidate-name">
-  शोभा धनाजी कवाळे
-  <img src="assets/cup.png" class="symbol-img" alt="symbol">
-</span>
+                <div class="bg-yellow-50 border-2 border-yellow-200 rounded shadow-md relative overflow-hidden">
+                    <div class="bg-yellow-100 p-1 text-[10px] font-bold text-center border-b uppercase">३ - 'क' जागा (पिवळा)</div>
+                    <div class="h-14 border-b bg-yellow-100/10 flex items-center px-2 text-xs font-bold text-yellow-300">१</div>
+                    <div class="flex items-center h-20 p-2 border-b cursor-pointer hover:bg-white" @click="castVote('yellow', 'रुपाली अजित पोवार')">
+                        <div class="w-6 font-bold text-xs">२</div>
+                        <div class="flex-1 text-xs font-bold px-2">रुपाली अजित पोवार</div>
+                        <img src="image_7f134b.png" class="symbol-box mx-1" alt="Symbol">
+                        <div class="w-16 flex flex-col items-center justify-center border-l gap-1 h-full bg-slate-50">
+                            <div class="w-3 h-3 rounded-full border bg-red-950" :class="activeUnit === 'yellow' ? 'beep-glow' : ''"></div>
+                            <div class="w-10 h-10 rounded-full border-2 border-blue-900 bg-blue-500 shadow-md active:scale-95 transition"></div>
+                        </div>
+                    </div>
+                    <template x-for="i in 7"><div class="h-10 border-b bg-yellow-100/20"></div></template>
+                    <div x-show="hasVoted('yellow')" class="voted-overlay">
+                        <span class="text-sm" :class="votedList.length < 4 ? 'text-blue-700' : 'text-green-700'" 
+                              x-text="votedList.length < 4 ? 'पुढील उमेदवारास मतदान करा' : 'मतदान पूर्ण ✓'"></span>
+                    </div>
+                </div>
 
-            <span class="vote-btn"></span>
-        </div>
-
-        <div class="candidate"></div><div class="candidate"></div>
-        <div class="candidate"></div><div class="candidate"></div>
-        <div class="candidate"></div>
-    </div>
-
-    <!-- EVM 2 -->
-    <div class="evm evm-2">
-        <div class="evm-header">२ - ब' जागा (गुलाबी)</div>
-        <div class="candidate"></div><div class="candidate"></div><div class="candidate"></div>
-
-        
-
-        <div class="candidate"></div><div class="candidate"></div>
-         <div class="candidate selectable">
-            <span class="number">४</span>
-            <span class="name">रेश्मा</span>
-            <span class="symbol">✋</span>
-            <span class="vote-btn"></span>
-        </div>
-        <div class="candidate"></div><div class="candidate"></div>
-        <div class="candidate"></div>
-    </div>
-
-    <!-- EVM 3 -->
-    <div class="evm evm-3">
-        <div class="evm-header">३ - क' जागा (पिवळा)</div>
-        <div class="candidate"></div><div class="candidate"></div><div class="candidate"></div>
-
-        <div class="candidate selectable">
-            <span class="number">४</span>
-            <span class="name">सलमान</span>
-            <span class="symbol">✋</span>
-            <span class="vote-btn"></span>
-        </div>
-
-        <div class="candidate"></div><div class="candidate"></div>
-        <div class="candidate"></div><div class="candidate"></div>
-        <div class="candidate"></div>
-    </div>
-
-    <!-- EVM 4 -->
-    <div class="evm evm-4">
-        <div class="evm-header">४ - ड' जागा (निळा)</div>
-        <div class="candidate"></div><div class="candidate"></div><div class="candidate"></div>
-
-        <div class="candidate selectable">
-            <span class="number">४</span>
-            <span class="name">समीर</span>
-            <span class="symbol">✋</span>
-            <span class="vote-btn"></span>
-        </div>
-
-        <div class="candidate"></div><div class="candidate"></div>
-        <div class="candidate"></div><div class="candidate"></div>
-        <div class="candidate"></div>
-    </div>
-</div>
-
-<!-- FINAL SUMMARY -->
-<div id="final-summary" style="display:none;">
-    <div class="summary-card">
-        <div class="summary-top"></div>
-        <div class="summary-body">
-            <div class="summary-icon"><img src="assets/cup.png" class="symbol-img" alt="symbol"></div>
-            <h2 class="summary-title">मतदान यशस्वी झाले!</h2>
-            <p>तुम्ही खालील ४ उमेदवारांना मतदान केले आहे:</p>
-
-            <div class="summary-list">
-                <div>WHITE — शोभा धनाजी कवाळे</div>
-                <div>PINK — रेश्मा</div>
-                <div>YELLOW — सलमान</div>
-                <div>BLUE —समीर</div>
+                <div class="bg-blue-50 border-2 border-blue-400 rounded shadow-md relative overflow-hidden">
+                    <div class="bg-blue-600 text-white p-1 text-[10px] font-bold text-center border-b uppercase">४ - 'ड' जागा (निळा)</div>
+                    <div class="flex items-center h-20 p-2 border-b cursor-pointer hover:bg-white" @click="castVote('blue', 'चौगले सचिन हरिष')">
+                        <div class="w-6 font-bold text-xs">१</div>
+                        <div class="flex-1 text-xs font-bold px-2">चौगले सचिन हरिष</div>
+                        <img src="image_7f134b.png" class="symbol-box mx-1" alt="Symbol">
+                        <div class="w-16 flex flex-col items-center justify-center border-l gap-1 h-full bg-slate-50">
+                            <div class="w-3 h-3 rounded-full border bg-red-950" :class="activeUnit === 'blue' ? 'beep-glow' : ''"></div>
+                            <div class="w-10 h-10 rounded-full border-2 border-blue-900 bg-blue-500 shadow-md active:scale-95 transition"></div>
+                        </div>
+                    </div>
+                    <div class="h-10 border-b bg-blue-100/10 flex items-center px-2 text-xs font-bold text-blue-200">२</div>
+                    <template x-for="i in 7"><div class="h-10 border-b bg-blue-100/20"></div></template>
+                    <div x-show="hasVoted('blue')" class="voted-overlay">
+                        <span class="text-sm" :class="votedList.length < 4 ? 'text-blue-700' : 'text-green-700'" 
+                              x-text="votedList.length < 4 ? 'पुढील उमेदवारास मतदान करा' : 'मतदान पूर्ण ✓'"></span>
+                    </div>
+                </div>
             </div>
+        </template>
 
-            <button id="resetBtn" class="reset-btn">
-                सिम्युलेशन पुन्हा सुरू करा (RESET)
-            </button>
-        </div>
-    </div>
-</div>
+        <template x-if="screen === 'summary'">
+            <div class="max-w-xl mx-auto bg-white rounded-xl shadow-2xl p-8 border-t-8 border-green-600">
+                <div class="text-center mb-6">
+                    <img src="image_7f134b.png" class="h-16 mx-auto mb-2" alt="Congress">
+                    <h2 class="text-2xl font-black text-green-700">मतदान यशस्वी झाले!</h2>
+                    <p class="text-gray-500 font-bold">तुम्ही खालील ४ उमेदवारांना मतदान केले आहे:</p>
+                </div>
 
-<audio id="voteSound" src="assets/vote.mp3" preload="auto"></audio>
-<script src="script.js"></script>
+                <div class="space-y-3">
+                    <template x-for="vote in votedList">
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border-2 border-gray-100">
+                            <div>
+                                <p class="text-[10px] text-gray-400 font-bold uppercase" x-text="'युनिट: ' + vote.unit"></p>
+                                <p class="text-lg font-black text-gray-800" x-text="vote.name"></p>
+                            </div>
+                            <img src="image_7f134b.png" class="h-10 w-10">
+                        </div>
+                    </template>
+                </div>
+
+                <button @click="reset()" class="w-full mt-8 bg-zinc-800 text-white py-3 rounded-lg font-bold hover:bg-zinc-700 transition">
+                    सिमुलेशन पुन्हा सुरू करा (RESET)
+                </button>
+            </div>
+        </template>
+
+    </main>
+
+    <script>
+        function votingApp() {
+            return {
+                screen: 'ballot',
+                activeUnit: null,
+                votedList: [], 
+                playBeep() {
+                    const audio = new Audio('beep.mp3');
+                    audio.play().catch(err => console.log("Audio play blocked or failed"));
+                },
+                hasVoted(unit) {
+                    return this.votedList.some(v => v.unit === unit);
+                },
+                castVote(unit, name) {
+                    if (this.hasVoted(unit)) return;
+
+                    this.activeUnit = unit;
+                    
+                    this.votedList.push({ unit, name });
+
+                    // Play beep ONLY on the 4th (last) vote
+                    if (this.votedList.length === 4) {
+                        this.playBeep();
+                    }
+
+                    setTimeout(() => {
+                        this.activeUnit = null;
+                        if (this.votedList.length === 4) {
+                            setTimeout(() => { this.screen = 'summary'; }, 1500);
+                        }
+                    }, 800);
+                },
+                reset() {
+                    this.screen = 'ballot';
+                    this.votedList = [];
+                    this.activeUnit = null;
+                }
+            }
+        }
+    </script>
 </body>
 </html>
-
-
-
-
-
