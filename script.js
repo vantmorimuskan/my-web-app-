@@ -1,33 +1,33 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const selectableRows = document.querySelectorAll(".candidate.selectable");
+    const rows = document.querySelectorAll(".candidate.selectable");
     const cards = document.querySelectorAll(".evm");
     const container = document.querySelector(".container");
     const summary = document.getElementById("final-summary");
     const sound = document.getElementById("voteSound");
 
-    let selectedCards = new Set();
+    let voted = new Set();
 
-    selectableRows.forEach(row => {
+    rows.forEach(row => {
         row.addEventListener("click", () => {
 
             const card = row.closest(".evm");
-            if (selectedCards.has(card)) return;
+            if (voted.has(card)) return;
 
-            // 🔊 Play vote sound
             sound.currentTime = 0;
             sound.play();
 
-            selectedCards.add(card);
+            voted.add(card);
+            card.classList.add("voted");
 
             cards.forEach(c => {
                 const msg = c.querySelector(".status-message");
                 if (msg) msg.remove();
             });
 
-            if (selectedCards.size < cards.length) {
+            if (voted.size < cards.length) {
                 cards.forEach(c => {
-                    if (!selectedCards.has(c)) {
+                    if (!voted.has(c)) {
                         const msg = document.createElement("div");
                         msg.className = "status-message status-next";
                         msg.innerText = "पुढील उमेदवारास मतदान करा";
@@ -36,8 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             } else {
                 cards.forEach(c => {
-                    c.classList.add("disabled");
-
                     const msg = document.createElement("div");
                     msg.className = "status-message status-done";
                     msg.innerText = "मतदान पूर्ण ✓";
