@@ -8,52 +8,107 @@
 <body>
 
 <header>
-    <h1>मतदान केंद्रावर कमीत कमी दोन व जास्तीत जास्त चार EVM</h1>
-    <p>कृपया चारही युनिटवर मतदान पूर्ण करा</p>
+    <h1>मतदान केंद्रावर कमी कॅमेरे आणि जास्त चार EVM</h1>
+    <p>कृपया चारही युनिट्सवर मतदान पूर्ण करा</p>
 </header>
-
-<audio id="voteSound" src="assets/vote.mp3" preload="auto"></audio>
 
 <div class="container">
 
-    <!-- CARD 1 -->
-    <div class="evm white">
-        <div class="card-header">१ - अ जागा (पांढरा)</div>
-        <div class="candidate selectable">बुवडे सुभाष राजाराम</div>
+    <!-- EVM CARD TEMPLATE (4 cards) -->
+
+    <!-- EVM 1 -->
+    <div class="evm evm-1">
+        <div class="evm-header">१ - अ' जागा (पांढरा)</div>
+        <div class="candidate"></div><div class="candidate"></div><div class="candidate"></div>
+
+        <div class="candidate selectable">
+            <span class="number">४</span>
+            <span class="name">शोभा धनाजी कवाळे</span>
+            <span class="symbol">✋</span>
+            <span class="vote-btn"></span>
+        </div>
+
+        <div class="candidate"></div><div class="candidate"></div>
+        <div class="candidate"></div><div class="candidate"></div>
+        <div class="candidate"></div>
     </div>
 
-    <!-- CARD 2 -->
-    <div class="evm pink">
-        <div class="card-header">२ - ब जागा (गुलाबी)</div>
-        <div class="candidate selectable">नरटे पुष्पा निलेश</div>
+    <!-- EVM 2 -->
+    <div class="evm evm-2">
+        <div class="evm-header">२ - ब' जागा (गुलाबी)</div>
+        <div class="candidate"></div><div class="candidate"></div><div class="candidate"></div>
+
+        <div class="candidate selectable">
+            <span class="number">४</span>
+            <span class="name">शोभा धनाजी कवाळे</span>
+            <span class="symbol">✋</span>
+            <span class="vote-btn"></span>
+        </div>
+
+        <div class="candidate"></div><div class="candidate"></div>
+        <div class="candidate"></div><div class="candidate"></div>
+        <div class="candidate"></div>
     </div>
 
-    <!-- CARD 3 -->
-    <div class="evm yellow">
-        <div class="card-header">३ - क जागा (पिवळा)</div>
-        <div class="candidate selectable">रुपाली अजित पोवार</div>
+    <!-- EVM 3 -->
+    <div class="evm evm-3">
+        <div class="evm-header">३ - क' जागा (पिवळा)</div>
+        <div class="candidate"></div><div class="candidate"></div><div class="candidate"></div>
+
+        <div class="candidate selectable">
+            <span class="number">४</span>
+            <span class="name">शोभा धनाजी कवाळे</span>
+            <span class="symbol">✋</span>
+            <span class="vote-btn"></span>
+        </div>
+
+        <div class="candidate"></div><div class="candidate"></div>
+        <div class="candidate"></div><div class="candidate"></div>
+        <div class="candidate"></div>
     </div>
 
-    <!-- CARD 4 -->
-    <div class="evm blue">
-        <div class="card-header">४ - ड जागा (निळा)</div>
-        <div class="candidate selectable">चौगुले सचिन हरिप</div>
-    </div>
+    <!-- EVM 4 -->
+    <div class="evm evm-4">
+        <div class="evm-header">४ - ड' जागा (निळा)</div>
+        <div class="candidate"></div><div class="candidate"></div><div class="candidate"></div>
 
+        <div class="candidate selectable">
+            <span class="number">४</span>
+            <span class="name">शोभा धनाजी कवाळे</span>
+            <span class="symbol">✋</span>
+            <span class="vote-btn"></span>
+        </div>
+
+        <div class="candidate"></div><div class="candidate"></div>
+        <div class="candidate"></div><div class="candidate"></div>
+        <div class="candidate"></div>
+    </div>
 </div>
 
 <!-- FINAL SUMMARY -->
-<div id="final-summary">
-    <h2>मतदान यशस्वी झाले!</h2>
+<div id="final-summary" style="display:none;">
+    <div class="summary-card">
+        <div class="summary-top"></div>
+        <div class="summary-body">
+            <div class="summary-icon">✋</div>
+            <h2 class="summary-title">मतदान यशस्वी झाले!</h2>
+            <p>तुम्ही खालील ४ उमेदवारांना मतदान केले आहे:</p>
 
-    <div class="summary-item">बुवडे सुभाष राजाराम</div>
-    <div class="summary-item">नरटे पुष्पा निलेश</div>
-    <div class="summary-item">रुपाली अजित पोवार</div>
-    <div class="summary-item">चौगुले सचिन हरिप</div>
+            <div class="summary-list">
+                <div>WHITE — बुवडे सुभाष राजाराम</div>
+                <div>PINK — नरटे पुष्पा निलेश</div>
+                <div>YELLOW — रुपाली अजित पवार</div>
+                <div>BLUE — चोगले सचिन हरिप</div>
+            </div>
 
-    <button id="resetBtn">सिम्युलेशन पुन्हा सुरू करा (RESET)</button>
+            <button id="resetBtn" class="reset-btn">
+                सिम्युलेशन पुन्हा सुरू करा (RESET)
+            </button>
+        </div>
+    </div>
 </div>
 
+<audio id="voteSound" src="assets/vote.mp3" preload="auto"></audio>
 <script src="script.js"></script>
 </body>
 </html>
