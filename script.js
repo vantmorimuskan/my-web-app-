@@ -6,40 +6,47 @@ document.addEventListener("DOMContentLoaded", () => {
     const summary = document.getElementById("final-summary");
     const sound = document.getElementById("voteSound");
 
-    let voted = new Set();
-    let votingStarted = false;
+    let votedCards = new Set();
     let completionBeepPlayed = false;
 
     rows.forEach(row => {
         row.addEventListener("click", () => {
 
             const card = row.closest(".evm");
-            if (voted.has(card)) return;
 
+            // ❌ Prevent re-click on same card
+            if (votedCards.has(card)) return;
+
+            // 🔊 Play vote beep
             sound.currentTime = 0;
             sound.play();
 
-            votingStarted = true;
-            voted.add(card);
-            card.classList.add("voted");
+            // Mark card as voted
+            votedCards.add(card);
+            card.classList.add("voted"); // disables & fades card
 
-            cards.forEach(c => {
-                const msg = c.querySelector(".status-message");
-                if (msg) msg.remove();
-            });
+            // Remove existing message from THIS card (if any)
+            const existingMsg = card.querySelector(".status-message");
+            if (existingMsg) existingMsg.remove();
 
-            if (voted.size < cards.length && votingStarted) {
-                cards.forEach(c => {
-                    if (!voted.has(c)) {
-                        const msg = document.createElement("div");
-                        msg.className = "status-message status-next";
-                        msg.innerText = "पुढील उमेदवारास मतदान करा";
-                        c.appendChild(msg);
-                    }
-                });
+            // 🟦 If not all cards voted yet → show message ONLY on selected card
+            if (votedCards.size < cards.length) {
+                const msg = document.createElement("div");
+                msg.className = "status-message status-next";
+                msg.innerText = "पुढील उमेदवारास मतदान करा";
+                card.appendChild(msg);
             }
 
-            if (voted.size === cards.length) {
+            // 🟩 ALL CARDS VOTED
+            if (votedCards.size === cards.length) {
+
+                // Remove all "next candidate" messages
+                cards.forEach(c => {
+                    const m = c.querySelector(".status-message");
+                    if (m) m.remove();
+                });
+
+                // Show "मतदान पूर्ण ✓" on all cards
                 cards.forEach(c => {
                     const msg = document.createElement("div");
                     msg.className = "status-message status-done";
@@ -47,6 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     c.appendChild(msg);
                 });
 
+                // 🔊 Play completion beep ONCE
                 if (!completionBeepPlayed) {
                     completionBeepPlayed = true;
                     setTimeout(() => {
@@ -55,6 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     }, 200);
                 }
 
+                // ⏳ Hold this state for 3 seconds
                 setTimeout(() => {
                     container.style.display = "none";
                     summary.style.display = "flex";
@@ -63,7 +72,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // RESET
     document.getElementById("resetBtn").addEventListener("click", () => {
         location.reload();
     });
 });
+
