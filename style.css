@@ -25,10 +25,52 @@ header {
     border: 2px solid #ccc;
     overflow: hidden;
 }
+/* Card disabled */
 .evm.voted {
     opacity: 0.35;
     pointer-events: none;
+    position: relative;
 }
+
+/* Status message base */
+.status-message {
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* NEXT CANDIDATE MESSAGE */
+.status-next {
+    color: #0b5cff;
+    font-weight: 800;
+    font-size: 14px;
+
+    /* 🔥 FIX: keep text clear even when card is faded */
+    opacity: 1 !important;
+
+    /* Center vertically in card */
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, -50%);
+}
+
+/* COMPLETION MESSAGE */
+.status-done {
+    color: green;
+    font-weight: 800;
+    font-size: 15px;
+
+    /* Keep text clear */
+    opacity: 1 !important;
+
+    /* Center vertically */
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, -50%);
+}
+
 
 .evm-header {
     font-weight: bold;
@@ -132,4 +174,5 @@ header {
     border-radius: 8px;
     cursor: pointer;
 }
+
 
