@@ -131,9 +131,9 @@ header {
 /* Symbol image replacement for emoji */
 /* Fix symbol image size & alignment */
 .symbol-img {
-    width: 22px;          /* 🔴 force small size */
-    height: 22px;
-    margin-left: 6px;
+    width: 30px;          /* 🔴 force small size */
+    height: 30px;
+    margin-left: 4px;
     vertical-align: middle;
     object-fit: contain;
     display: inline-block;
@@ -143,6 +143,7 @@ header {
     align-items: center;
     gap: 6px;
 }
+
 
 
 
