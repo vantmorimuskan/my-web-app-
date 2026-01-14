@@ -22,8 +22,8 @@ header {
 .evm {
     width: 260px;
     border-radius: 6px;
-    overflow: hidden;
     border: 2px solid #ccc;
+    overflow: hidden;
 }
 
 .evm-header {
@@ -40,8 +40,13 @@ header {
 .candidate {
     display: flex;
     align-items: center;
-    padding: 12px;
-    border-top: 1px solid #ccc;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    min-height: 42px;
+}
+
+.selectable {
+    cursor: pointer;
 }
 
 .number {
@@ -51,24 +56,79 @@ header {
 
 .name {
     flex: 1;
-    font-size: 14px;
 }
 
 .symbol {
-    font-size: 22px;
-    margin-right: 10px;
+    margin-right: 8px;
 }
 
 .button {
-    width: 26px;
-    height: 26px;
-    background: #1e40af;
+    width: 24px;
+    height: 24px;
+    background: #2563eb;
     border-radius: 50%;
 }
 
-.empty-box {
-    margin: 30px auto;
-    width: 120px;
-    height: 35px;
-    border: 3px solid red;
+.evm.disabled {
+    opacity: 0.35;
+    pointer-events: none;
+}
+
+.status-message {
+    text-align: center;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+.status-next { color: #1d4ed8; }
+.status-done { color: #15803d; }
+
+/* FINAL SUMMARY */
+#final-summary {
+    display: flex;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+.summary-card {
+    background: #fff;
+    width: 420px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    overflow: hidden;
+}
+
+.summary-top {
+    height: 8px;
+    background: #16a34a;
+}
+
+.summary-body {
+    padding: 25px;
+    text-align: center;
+}
+
+.summary-icon {
+    font-size: 48px;
+}
+
+.summary-title {
+    color: #15803d;
+}
+
+.summary-list div {
+    background: #f9fafb;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+}
+
+.reset-btn {
+    width: 100%;
+    padding: 12px;
+    background: #222;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
 }
