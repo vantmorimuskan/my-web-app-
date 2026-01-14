@@ -46,9 +46,9 @@
                 <div class="bg-pink-50 border-2 border-pink-200 rounded shadow-md relative overflow-hidden">
                     <div class="bg-pink-100 p-1 text-[10px] font-bold text-center border-b uppercase">२ - 'ब' जागा (गुलाबी)</div>
                     <div class="h-14 border-b bg-pink-100/10 flex items-center px-2 text-xs font-bold text-pink-300">१</div>
-                    <div class="flex items-center h-20 p-2 border-b cursor-pointer hover:bg-white" @click="castVote('pink', 'नरुटे')">
+                    <div class="flex items-center h-20 p-2 border-b cursor-pointer hover:bg-white" @click="castVote('pink', 'अ')">
                         <div class="w-6 font-bold text-xs">२</div>
-                        <div class="flex-1 text-xs font-bold px-2">नरुटे</div>
+                        <div class="flex-1 text-xs font-bold px-2">अ</div>
                         <img src="image_7f134b.png" class="symbol-box mx-1" alt="Symbol">
                         <div class="w-16 flex flex-col items-center justify-center border-l gap-1 h-full bg-slate-50">
                             <div class="w-3 h-3 rounded-full border bg-red-950" :class="activeUnit === 'pink' ? 'beep-glow' : ''"></div>
@@ -65,9 +65,9 @@
                 <div class="bg-yellow-50 border-2 border-yellow-200 rounded shadow-md relative overflow-hidden">
                     <div class="bg-yellow-100 p-1 text-[10px] font-bold text-center border-b uppercase">३ - 'क' जागा (पिवळा)</div>
                     <div class="h-14 border-b bg-yellow-100/10 flex items-center px-2 text-xs font-bold text-yellow-300">१</div>
-                    <div class="flex items-center h-20 p-2 border-b cursor-pointer hover:bg-white" @click="castVote('yellow', 'पोवार')">
+                    <div class="flex items-center h-20 p-2 border-b cursor-pointer hover:bg-white" @click="castVote('yellow', 'ब')">
                         <div class="w-6 font-bold text-xs">२</div>
-                        <div class="flex-1 text-xs font-bold px-2">पोवार</div>
+                        <div class="flex-1 text-xs font-bold px-2">ब</div>
                         <img src="image_7f134b.png" class="symbol-box mx-1" alt="Symbol">
                         <div class="w-16 flex flex-col items-center justify-center border-l gap-1 h-full bg-slate-50">
                             <div class="w-3 h-3 rounded-full border bg-red-950" :class="activeUnit === 'yellow' ? 'beep-glow' : ''"></div>
@@ -83,9 +83,9 @@
 
                 <div class="bg-blue-50 border-2 border-blue-400 rounded shadow-md relative overflow-hidden">
                     <div class="bg-blue-600 text-white p-1 text-[10px] font-bold text-center border-b uppercase">४ - 'ड' जागा (निळा)</div>
-                    <div class="flex items-center h-20 p-2 border-b cursor-pointer hover:bg-white" @click="castVote('blue', 'चौगले')">
+                    <div class="flex items-center h-20 p-2 border-b cursor-pointer hover:bg-white" @click="castVote('blue', 'स')">
                         <div class="w-6 font-bold text-xs">१</div>
-                        <div class="flex-1 text-xs font-bold px-2">चौगले</div>
+                        <div class="flex-1 text-xs font-bold px-2">स</div>
                         <img src="image_7f134b.png" class="symbol-box mx-1" alt="Symbol">
                         <div class="w-16 flex flex-col items-center justify-center border-l gap-1 h-full bg-slate-50">
                             <div class="w-3 h-3 rounded-full border bg-red-950" :class="activeUnit === 'blue' ? 'beep-glow' : ''"></div>
@@ -172,6 +172,7 @@
     </script>
 </body>
 </html>
+
 
 
 
