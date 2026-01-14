@@ -1,0 +1,74 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f0f0f0;
+}
+
+header {
+    background: #1f2937;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    border-bottom: 4px solid orange;
+}
+
+.container {
+    display: flex;
+    gap: 15px;
+    padding: 20px;
+    justify-content: center;
+}
+
+.evm {
+    width: 260px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 2px solid #ccc;
+}
+
+.evm-header {
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+}
+
+.evm-1 { background: #ffffff; }
+.evm-2 { background: #fff0f6; }
+.evm-3 { background: #fffbd6; }
+.evm-4 { background: #eef6ff; }
+
+.candidate {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border-top: 1px solid #ccc;
+}
+
+.number {
+    width: 25px;
+    font-weight: bold;
+}
+
+.name {
+    flex: 1;
+    font-size: 14px;
+}
+
+.symbol {
+    font-size: 22px;
+    margin-right: 10px;
+}
+
+.button {
+    width: 26px;
+    height: 26px;
+    background: #1e40af;
+    border-radius: 50%;
+}
+
+.empty-box {
+    margin: 30px auto;
+    width: 120px;
+    height: 35px;
+    border: 3px solid red;
+}
